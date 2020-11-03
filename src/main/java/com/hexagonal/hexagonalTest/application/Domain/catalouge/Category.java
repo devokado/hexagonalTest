@@ -1,4 +1,4 @@
-package com.hexagonal.hexagonalTest.Domain.catalouge;
+package com.hexagonal.hexagonalTest.application.Domain.catalouge;
 
 import java.sql.Timestamp;
 
