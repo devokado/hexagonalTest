@@ -37,4 +37,47 @@ public class Category {
         this.udt = udt;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName_en() {
+        return name_en;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getParent() {
+        return parent;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public Character getKind() {
+        return kind;
+    }
+
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public boolean isVisibility() {
+        return visibility;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public Timestamp getCdt() {
+        return cdt;
+    }
+
+    public Timestamp getUdt() {
+        return udt;
+    }
 }

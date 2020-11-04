@@ -17,7 +17,7 @@ public class categoryController {
   private categoryUsecase categoryUsecase;
 
     @PostMapping(value = "/create")
-    public Category createCategory(@Valid @RequestBody Category category){
+    public Category createCategory(@RequestBody @Valid Category category){
         categoryUsecase.category(category);
         return category;
     }
