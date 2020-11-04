@@ -1,8 +1,13 @@
 package com.hexagonal.hexagonalTest.application.Domain.catalouge;
 
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.sql.Timestamp;
+@Entity
 
 public class Category {
+    @Id
     private Integer id;
     private String name_en;
     private  String name;
@@ -14,6 +19,9 @@ public class Category {
     private boolean deleted;
     private Timestamp cdt;
     private Timestamp udt;
+
+    public Category() {
+    }
 
     public Category(Integer id, String name_en, String name, Integer parent, String image, Character kind, Integer priority, boolean visibility, boolean deleted, Timestamp cdt, Timestamp udt) {
         this.id = id;
@@ -28,4 +36,5 @@ public class Category {
         this.cdt = cdt;
         this.udt = udt;
     }
+
 }
