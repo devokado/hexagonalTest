@@ -1,11 +1,9 @@
-package com.hexagonal.hexagonalTest.application.Services;
+package com.hexagonal.hexagonalTest.app.Services;
 
-import com.hexagonal.hexagonalTest.application.Domain.catalouge.Category;
-import com.hexagonal.hexagonalTest.application.Port.incoming.categoryUsecase;
-import com.hexagonal.hexagonalTest.application.Port.outgoing.loadCategoryPort;
-import com.hexagonal.hexagonalTest.application.Port.outgoing.saveCategoryPort;
-
-import java.sql.Timestamp;
+import com.hexagonal.hexagonalTest.domain.catalouge.Category;
+import com.hexagonal.hexagonalTest.app.Port.incoming.categoryUsecase;
+import com.hexagonal.hexagonalTest.app.Port.outgoing.loadCategoryPort;
+import com.hexagonal.hexagonalTest.app.Port.outgoing.saveCategoryPort;
 
 public class categoryService implements categoryUsecase {
     private loadCategoryPort loadCategoryPort;

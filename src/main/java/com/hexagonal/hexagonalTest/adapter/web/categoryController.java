@@ -1,7 +1,7 @@
-package com.hexagonal.hexagonalTest.adapters.web;
+package com.hexagonal.hexagonalTest.adapter.web;
 
-import com.hexagonal.hexagonalTest.application.Domain.catalouge.Category;
-import com.hexagonal.hexagonalTest.application.Port.incoming.categoryUsecase;
+import com.hexagonal.hexagonalTest.domain.catalouge.Category;
+import com.hexagonal.hexagonalTest.app.Port.incoming.categoryUsecase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

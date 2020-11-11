@@ -1,6 +1,6 @@
-package com.hexagonal.hexagonalTest.adapters.persistence;
+package com.hexagonal.hexagonalTest.adapter.persistence;
 
-import com.hexagonal.hexagonalTest.application.Domain.catalouge.Category;
+import com.hexagonal.hexagonalTest.domain.catalouge.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

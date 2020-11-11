@@ -1,8 +1,8 @@
-package com.hexagonal.hexagonalTest.adapters.persistence;
+package com.hexagonal.hexagonalTest.adapter.persistence;
 
-import com.hexagonal.hexagonalTest.application.Domain.catalouge.Category;
-import com.hexagonal.hexagonalTest.application.Port.outgoing.loadCategoryPort;
-import com.hexagonal.hexagonalTest.application.Port.outgoing.saveCategoryPort;
+import com.hexagonal.hexagonalTest.domain.catalouge.Category;
+import com.hexagonal.hexagonalTest.app.Port.outgoing.loadCategoryPort;
+import com.hexagonal.hexagonalTest.app.Port.outgoing.saveCategoryPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
