@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
 @Table(name = "category")
-public class CategoryDTO {
+ class CategoryDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -28,5 +29,17 @@ public class CategoryDTO {
     private Timestamp cdt;
     private Timestamp udt;
 
+
+
+
+    public static CategoryDTO from(Category category){
+        return new CategoryDTO(category.getId(),category.getName_en(),category.getName(),category.getParent(),category.getImage(),category.getKind(),category.getPriority(),category.isVisibility(),category.isDeleted(),category.getCdt(),category.getUdt());
+    }
+    Category asCategory(){
+        Date date = new Date();
+        long time = date.getTime();
+        Timestamp ts = new Timestamp(time);
+        return new Category(name_en,name,parent,image,kind,priority,visibility,false,ts,ts);
+    }
 
 }

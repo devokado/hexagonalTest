@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 @ToString
 @AllArgsConstructor
 public class Category {
+
     @Getter
     @Setter
     private Long id;
@@ -38,6 +39,10 @@ public class Category {
         this.deleted = deleted;
         this.cdt = cdt;
         this.udt = udt;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName_en() {
@@ -78,5 +83,20 @@ public class Category {
 
     public Timestamp getUdt() {
         return udt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Category that = (Category) o;
+
+        return id != null ? id.equals(that.id) : that.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

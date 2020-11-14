@@ -1,7 +1,7 @@
 package com.hexagonal.hexagonalTest.adapter.web;
 
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
-import com.hexagonal.hexagonalTest.app.Port.incoming.categoryUsecase;
+import com.hexagonal.hexagonalTest.domain.catalouge.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,11 +14,12 @@ import javax.validation.Valid;
 @RequestMapping("/category")
 public class categoryController {
   @Autowired
-  private categoryUsecase categoryUsecase;
+  private CategoryRepository categoryRepository;
 
     @PostMapping(value = "/create")
-    public Category createCategory(@RequestBody @Valid Category category){
-        categoryUsecase.category(category);
+    public Category createCategory(@RequestBody @Valid CreateCategory createCategory){
+        Category category = createCategory.asCategory();
+        categoryRepository.save(category);
         return category;
     }
 }
