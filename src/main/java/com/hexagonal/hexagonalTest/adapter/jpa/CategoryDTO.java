@@ -31,10 +31,11 @@ import java.util.Date;
 
 
 
-
+//todo: No data && modelMapper ??
     public static CategoryDTO from(Category category){
         return new CategoryDTO(category.getId(),category.getName_en(),category.getName(),category.getParent(),category.getImage(),category.getKind(),category.getPriority(),category.isVisibility(),category.isDeleted(),category.getCdt(),category.getUdt());
     }
+
     Category asCategory(){
         Date date = new Date();
         long time = date.getTime();

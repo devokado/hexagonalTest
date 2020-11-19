@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 @ToString
 @AllArgsConstructor
@@ -28,7 +29,11 @@ public class Category {
     private final Timestamp cdt;
     private final Timestamp udt;
 
+    //todo: solid setter? No data
     public Category(String name_en, String name, int parent, String image, Character kind, int priority, boolean visibility, boolean deleted, Timestamp cdt, Timestamp udt) {
+        Date date = new Date();
+        long time = date.getTime();
+        Timestamp ts = new Timestamp(time);
         this.name_en = name_en;
         this.name = name;
         this.parent = parent;
@@ -36,14 +41,12 @@ public class Category {
         this.kind = kind;
         this.priority = priority;
         this.visibility = visibility;
-        this.deleted = deleted;
-        this.cdt = cdt;
-        this.udt = udt;
+        this.deleted = false;
+        this.cdt = ts;
+        this.udt = ts;
     }
 
-    public Long getId() {
-        return id;
-    }
+
 
     public String getName_en() {
         return name_en;
