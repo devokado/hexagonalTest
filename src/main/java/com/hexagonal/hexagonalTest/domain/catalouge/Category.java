@@ -18,7 +18,7 @@ public class Category {
     @Setter
     private Long id;
 
-    private final String name_en;
+    private final NameEN name_en;
     private final String name;
     private final int parent;
     private final String image;
@@ -30,11 +30,11 @@ public class Category {
     private final Timestamp udt;
 
     //todo: solid setter? No data
-    public Category(String name_en, String name, int parent, String image, Character kind, int priority, boolean visibility, boolean deleted, Timestamp cdt, Timestamp udt) {
+    public Category(NameEN name_en, String name, int parent, String image, Character kind, int priority, boolean visibility, boolean deleted, Timestamp cdt, Timestamp udt) {
         Date date = new Date();
         long time = date.getTime();
         Timestamp ts = new Timestamp(time);
-        this.name_en = name_en;
+        this.name_en =name_en;
         this.name = name;
         this.parent = parent;
         this.image = image;
@@ -48,7 +48,7 @@ public class Category {
 
 
 
-    public String getName_en() {
+    public NameEN getName_en() {
         return name_en;
     }
 
