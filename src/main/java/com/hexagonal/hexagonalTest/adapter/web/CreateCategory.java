@@ -1,6 +1,7 @@
 package com.hexagonal.hexagonalTest.adapter.web;
 
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
+import com.hexagonal.hexagonalTest.domain.catalouge.NameEN;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateCategory {
-    private String name_en;
+    private NameEN name_en;
     private String name;
     private int parent;
     private String image;

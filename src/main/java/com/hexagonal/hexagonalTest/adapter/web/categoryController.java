@@ -18,7 +18,7 @@ public class categoryController {
 
 
     @PostMapping(value = "/create")
-    public Category createCategory(@RequestBody @Valid CreateCategory createCategory){
+    public Category createCategory(@Valid @RequestBody CreateCategory createCategory){
         Category category = createCategory.asCategory();
         categoryRepository.save(category);
         return category;

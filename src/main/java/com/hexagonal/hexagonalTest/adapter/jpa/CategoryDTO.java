@@ -1,6 +1,7 @@
 package com.hexagonal.hexagonalTest.adapter.jpa;
 
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
+import com.hexagonal.hexagonalTest.domain.catalouge.NameEN;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,14 +34,14 @@ import java.util.Date;
 
 //todo: No data && modelMapper ??
     public static CategoryDTO from(Category category){
-        return new CategoryDTO(category.getId(),category.getName_en(),category.getName(),category.getParent(),category.getImage(),category.getKind(),category.getPriority(),category.isVisibility(),category.isDeleted(),category.getCdt(),category.getUdt());
+        return new CategoryDTO(category.getId(),category.getName_en().asRaw(),category.getName(),category.getParent(),category.getImage(),category.getKind(),category.getPriority(),category.isVisibility(),category.isDeleted(),category.getCdt(),category.getUdt());
     }
 
     Category asCategory(){
         Date date = new Date();
         long time = date.getTime();
         Timestamp ts = new Timestamp(time);
-        return new Category(name_en,name,parent,image,kind,priority,visibility,false,ts,ts);
+        return new Category(new NameEN(name_en),name,parent,image,kind,priority,visibility,false,ts,ts);
     }
 
 }
