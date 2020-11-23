@@ -1,7 +1,6 @@
 package com.hexagonal.hexagonalTest.domain.catalouge;
 
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,7 +35,7 @@ public class Category {
         Date date = new Date();
         long time = date.getTime();
         Timestamp ts = new Timestamp(time);
-        this.name_en =name_en;
+        this.name_en = name_en;
         this.name = name;
         this.parent = parent;
         this.image = image;
@@ -47,7 +46,6 @@ public class Category {
         this.cdt = ts;
         this.udt = ts;
     }
-
 
 
     public NameEN getName_en() {
