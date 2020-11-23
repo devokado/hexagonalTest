@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -19,6 +21,7 @@ import java.util.Date;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String name_en;
     private  String name;
     private int parent;
