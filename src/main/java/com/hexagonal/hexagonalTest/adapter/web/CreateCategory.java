@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.sql.Timestamp;
 
@@ -13,6 +14,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateCategory {
+    @Valid
     private NameEN name_en;
     private String name;
     private int parent;
