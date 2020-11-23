@@ -1,5 +1,9 @@
 package com.hexagonal.hexagonalTest.domain.catalouge;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.ToString;
 
@@ -8,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+@Data
 @ToString
 public class NameEN {
 
@@ -16,8 +21,8 @@ public class NameEN {
     @Pattern(regexp = "\"[\\p{Alnum}\\p{Punct}\\s]\"", message = "Just English characters are accepted!")
     private final String nameEn;
 
-    public NameEN(String nameEn) {
-
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public NameEN(@JsonProperty("nameEn")String nameEn) {
             this.nameEn = nameEn;
 
     }
