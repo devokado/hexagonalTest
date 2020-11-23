@@ -10,6 +10,7 @@
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="entityManagerFactory" value="6eb2a0b6-b2e6-463d-8b5a-acb8c906dabb" />
+          <factory-entry name="hexagonalTest" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
