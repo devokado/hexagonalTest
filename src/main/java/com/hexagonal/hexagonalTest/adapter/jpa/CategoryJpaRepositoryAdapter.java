@@ -37,4 +37,12 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
                 .map(CategoryDTO::asCategory)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Optional<Category> findById(Long id) {
+        Optional<CategoryDTO> dto =categoryJpaRepository.findById(id);
+        return dto.map(CategoryDTO::asCategory);
+    }
+
+
 }

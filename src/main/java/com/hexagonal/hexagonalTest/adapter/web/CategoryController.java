@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/categories")
@@ -30,6 +31,11 @@ public class CategoryController {
         model.addAttribute("categories",categories);
         return ResponseEntity.status(HttpStatus.FOUND).body(categories);
 
+    }
+    @GetMapping("{categoryId}")
+    public ResponseEntity<?> getCategoryById(@PathVariable("categoryId") Long id){
+        Optional<Category> category = categoryRepository.findById(id);
+        return ResponseEntity.status(HttpStatus.FOUND).body(category);
     }
 
 
