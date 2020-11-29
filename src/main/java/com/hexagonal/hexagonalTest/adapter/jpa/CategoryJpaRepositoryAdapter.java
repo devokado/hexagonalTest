@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -27,5 +28,13 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
         CategoryDTO dto= CategoryDTO.from(category);
         dto= categoryJpaRepository.save(dto);
         return dto.asCategory();
+    }
+
+    @Override
+    public List<Category> findAll() {
+        return categoryJpaRepository.findAll()
+                .stream()
+                .map(CategoryDTO::asCategory)
+                .collect(Collectors.toList());
     }
 }

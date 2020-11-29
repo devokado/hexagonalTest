@@ -10,9 +10,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Objects;
 
 @ToString
-@AllArgsConstructor
 public class Category {
 
     @Getter
@@ -95,7 +95,7 @@ public class Category {
 
         Category that = (Category) o;
 
-        return id != null ? id.equals(that.id) : that.id == null;
+        return Objects.equals(id, that.id);
     }
 
     @Override

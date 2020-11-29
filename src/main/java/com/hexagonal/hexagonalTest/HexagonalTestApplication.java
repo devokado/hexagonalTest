@@ -10,6 +10,7 @@ public class HexagonalTestApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(HexagonalTestApplication.class, args);
+
 	}
 
 }

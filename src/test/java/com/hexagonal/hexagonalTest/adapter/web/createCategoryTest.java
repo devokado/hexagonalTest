@@ -5,6 +5,7 @@ import com.hexagonal.hexagonalTest.domain.catalouge.NameEN;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.annotations.BeforeTest;
 
 
 import javax.validation.ConstraintViolation;
@@ -56,4 +57,14 @@ public class createCategoryTest {
         assertThat(violations.size()).isEqualTo(1);
 
     }
+    @Test
+    public void whenNameIsNotEnglish(){
+        validator = Validation.buildDefaultValidatorFactory().getValidator();
+        NameEN nameEN = new NameEN("شلوار");
+        validator.validate(nameEN).stream().forEach(violation -> System.out.println(violation.getMessage()));
+        Set<ConstraintViolation<NameEN>> violations = validator.validate(nameEN);
+
+
+    }
+
 }
