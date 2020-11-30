@@ -1,14 +1,16 @@
 package com.hexagonal.hexagonalTest.domain.catalouge;
 
 
-import lombok.AllArgsConstructor;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
+
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -31,7 +33,7 @@ public class Category {
     private final Timestamp udt;
 
     //todo: solid setter? No data
-    public Category(NameEN name_en, String name, int parent, String image, Character kind, int priority, boolean visibility, boolean deleted, Timestamp cdt, Timestamp udt) {
+    public Category(NameEN name_en, String name, int parent, String image, Character kind, int priority, boolean visibility) {
         Date date = new Date();
         long time = date.getTime();
         Timestamp ts = new Timestamp(time);
@@ -46,6 +48,8 @@ public class Category {
         this.cdt = ts;
         this.udt = ts;
     }
+
+
 
 
     public NameEN getName_en() {

@@ -22,7 +22,10 @@ public class CategoryController {
     @PostMapping(value = "/create")
     public ResponseEntity<?> createCategory(@Valid @RequestBody CreateCategory createCategory){
         Category category = createCategory.asCategory();
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoryRepository.save(category));
+        categoryRepository.save(category);
+
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(category);
     }
 
     @GetMapping()
@@ -36,6 +39,14 @@ public class CategoryController {
     public ResponseEntity<?> getCategoryById(@PathVariable("categoryId") Long id){
         Optional<Category> category = categoryRepository.findById(id);
         return ResponseEntity.status(HttpStatus.FOUND).body(category);
+    }
+    @PutMapping("{categoryId}")
+    public ResponseEntity<?> updateCategoryDetails(@PathVariable("categoryId") Long id,
+                                                   @Valid @RequestBody CreateCategory createCategory){
+        Optional<Category> category = categoryRepository.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(category);
+
+
     }
 
 

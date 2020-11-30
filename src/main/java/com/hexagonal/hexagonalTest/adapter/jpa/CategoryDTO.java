@@ -5,6 +5,8 @@ import com.hexagonal.hexagonalTest.domain.catalouge.NameEN;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -30,7 +32,9 @@ import java.util.Date;
     private int priority;
     private boolean visibility;
     private boolean deleted;
+    @CreationTimestamp
     private Timestamp cdt;
+    @UpdateTimestamp
     private Timestamp udt;
 
 
@@ -41,10 +45,7 @@ import java.util.Date;
     }
 
     Category asCategory(){
-        Date date = new Date();
-        long time = date.getTime();
-        Timestamp ts = new Timestamp(time);
-        return new Category(new NameEN(name_en),name,parent,image,kind,priority,visibility,false,ts,ts);
+        return new Category(new NameEN(name_en),name,parent,image,kind,priority,visibility);
     }
 
 }

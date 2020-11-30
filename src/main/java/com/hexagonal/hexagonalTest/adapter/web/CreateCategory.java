@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class CreateCategory {
     @Valid
-    private NameEN name_en;
+    private String name_en;
     private String name;
     private int parent;
     private String image;
@@ -25,10 +25,7 @@ public class CreateCategory {
 
 
     Category asCategory(){
-        Date date = new Date();
-        long time = date.getTime();
-        Timestamp ts = new Timestamp(time);
-        return new Category(name_en,name,parent,image,kind,priority,visibility,false,ts,ts);
+        return new Category(new NameEN(name_en),name,parent,image,kind,priority,visibility);
     }
 
 }
