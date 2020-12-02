@@ -48,4 +48,5 @@ import java.util.Date;
         return new Category(new NameEN(name_en),name,parent,image,kind,priority,visibility);
     }
 
+
 }

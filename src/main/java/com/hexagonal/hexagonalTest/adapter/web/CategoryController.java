@@ -15,38 +15,46 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/v1/categories")
 public class CategoryController {
-  @Autowired
-  private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
 
     @PostMapping(value = "/create")
-    public ResponseEntity<?> createCategory(@Valid @RequestBody CreateCategory createCategory){
+    public ResponseEntity<?> createCategory(@Valid @RequestBody CreateCategory createCategory) {
         Category category = createCategory.asCategory();
         categoryRepository.save(category);
-
-
         return ResponseEntity.status(HttpStatus.CREATED).body(category);
     }
 
     @GetMapping()
-    public ResponseEntity<?> getAllCategories(Model model){
+    public ResponseEntity<?> getAllCategories(Model model) {
         List<Category> categories = categoryRepository.findAll();
-        model.addAttribute("categories",categories);
+        model.addAttribute("categories", categories);
         return ResponseEntity.status(HttpStatus.FOUND).body(categories);
 
     }
+
     @GetMapping("{categoryId}")
-    public ResponseEntity<?> getCategoryById(@PathVariable("categoryId") Long id){
+    public ResponseEntity<?> getCategoryById(@PathVariable("categoryId") Long id) {
         Optional<Category> category = categoryRepository.findById(id);
         return ResponseEntity.status(HttpStatus.FOUND).body(category);
     }
+
     @PutMapping("{categoryId}")
     public ResponseEntity<?> updateCategoryDetails(@PathVariable("categoryId") Long id,
-                                                   @Valid @RequestBody CreateCategory createCategory){
+                                                   @Valid @RequestBody CreateCategory createCategory) {
         Optional<Category> category = categoryRepository.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(category);
 
 
+        return ResponseEntity.status(HttpStatus.OK).body(categoryRepository.update(category.get(), createCategory));
+
+
+    }
+
+    @DeleteMapping("{categoryId}")
+    public ResponseEntity<?> deleteCategoryById(@PathVariable("categoryId") Long id) {
+        categoryRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Deleted");
     }
 
 

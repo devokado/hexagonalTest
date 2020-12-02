@@ -1,5 +1,6 @@
 package com.hexagonal.hexagonalTest.adapter.jpa;
 
+import com.hexagonal.hexagonalTest.adapter.web.CreateCategory;
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
 import com.hexagonal.hexagonalTest.domain.catalouge.CategoryRepository;
 import org.springframework.data.domain.Example;
@@ -42,6 +43,24 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
     public Optional<Category> findById(Long id) {
         Optional<CategoryDTO> dto =categoryJpaRepository.findById(id);
         return dto.map(CategoryDTO::asCategory);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+      categoryJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public Category update(Category category, CreateCategory createCategory) {
+        CategoryDTO dto = CategoryDTO.from(category);
+        dto.setName(createCategory.getName());
+        dto.setName_en(createCategory.getName_en());
+        dto.setParent(createCategory.getParent());
+        dto.setKind(createCategory.getKind());
+        dto.setPriority(createCategory.getPriority());
+        dto.setImage(createCategory.getImage());
+        dto.setVisibility(createCategory.isVisibility());
+        return dto.asCategory();
     }
 
 
