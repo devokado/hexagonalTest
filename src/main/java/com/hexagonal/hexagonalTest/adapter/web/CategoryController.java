@@ -1,5 +1,6 @@
 package com.hexagonal.hexagonalTest.adapter.web;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
 import com.hexagonal.hexagonalTest.domain.catalouge.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -17,6 +20,8 @@ import java.util.Optional;
 public class CategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ObjectMapper objectMapper;
 
 
     @PostMapping(value = "/create")
@@ -49,6 +54,12 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.OK).body(categoryRepository.update(category.get(), createCategory));
 
 
+    }
+    //todo: @PatchMapping
+    @PatchMapping("{categoryId}")
+    public ResponseEntity<?>  PatchById(@PathVariable("categoryId") Long id,@RequestBody Map<String, String> category) throws InvocationTargetException, IllegalAccessException {
+        Category toBePatchedCat = objectMapper.convertValue(category,Category.class);
+       return ResponseEntity.status(HttpStatus.OK).body(categoryRepository.patch(id,toBePatchedCat));
     }
 
     @DeleteMapping("{categoryId}")

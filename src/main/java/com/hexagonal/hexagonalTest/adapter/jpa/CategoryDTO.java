@@ -9,10 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -46,6 +43,9 @@ import java.util.Date;
 
     Category asCategory(){
         return new Category(new NameEN(name_en),name,parent,image,kind,priority,visibility);
+    }
+    Category asResponse(){
+        return new Category(id,new NameEN(name_en),name,parent,image,kind,priority,visibility);
     }
 
 

@@ -5,12 +5,9 @@ package com.hexagonal.hexagonalTest.domain.catalouge;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 
@@ -21,16 +18,19 @@ public class Category {
     @Setter
     private Long id;
 
-    private final NameEN name_en;
-    private final String name;
-    private final int parent;
-    private final String image;
-    private final Character kind;
-    private final int priority;
-    private final boolean visibility;
-    private final boolean deleted;
-    private final Timestamp cdt;
-    private final Timestamp udt;
+    private  NameEN name_en;
+    private  String name;
+    private  int parent;
+    private  String image;
+    private  Character kind;
+    private  int priority;
+    private  boolean visibility;
+    private  boolean deleted;
+    private  Timestamp cdt;
+    private  Timestamp udt;
+
+    public Category() {
+    }
 
     //todo: solid setter? No data
     public Category(NameEN name_en, String name, int parent, String image, Character kind, int priority, boolean visibility) {
@@ -48,8 +48,22 @@ public class Category {
         this.cdt = ts;
         this.udt = ts;
     }
-
-
+    public Category(Long id,NameEN name_en, String name, int parent, String image, Character kind, int priority, boolean visibility) {
+        Date date = new Date();
+        long time = date.getTime();
+        Timestamp ts = new Timestamp(time);
+        this.id = id;
+        this.name_en = name_en;
+        this.name = name;
+        this.parent = parent;
+        this.image = image;
+        this.kind = kind;
+        this.priority = priority;
+        this.visibility = visibility;
+        this.deleted = false;
+        this.cdt = ts;
+        this.udt = ts;
+    }
 
 
     public NameEN getName_en() {

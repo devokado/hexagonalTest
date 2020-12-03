@@ -3,12 +3,11 @@ package com.hexagonal.hexagonalTest.adapter.jpa;
 import com.hexagonal.hexagonalTest.adapter.web.CreateCategory;
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
 import com.hexagonal.hexagonalTest.domain.catalouge.CategoryRepository;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.apache.commons.beanutils.BeanUtilsBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,6 +15,8 @@ import java.util.stream.Collectors;
 
 @Repository
 public class CategoryJpaRepositoryAdapter implements CategoryRepository {
+    @Autowired
+    private NullAwareBeanUtilsBean beanUtils;
 
     private final CategoryJpaRepository categoryJpaRepository;
 
@@ -35,14 +36,14 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
     public List<Category> findAll() {
         return categoryJpaRepository.findAll()
                 .stream()
-                .map(CategoryDTO::asCategory)
+                .map(CategoryDTO::asResponse)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<Category> findById(Long id) {
-        Optional<CategoryDTO> dto =categoryJpaRepository.findById(id);
-        return dto.map(CategoryDTO::asCategory);
+        Optional<CategoryDTO> dto = categoryJpaRepository.findById(id);
+        return dto.map(CategoryDTO::asResponse);
     }
 
     @Override
@@ -60,7 +61,23 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
         dto.setPriority(createCategory.getPriority());
         dto.setImage(createCategory.getImage());
         dto.setVisibility(createCategory.isVisibility());
+        dto = categoryJpaRepository.save(dto);
         return dto.asCategory();
+    }
+
+    @Override
+    public Category patch(Long id,Category toBePatchedCat) throws InvocationTargetException, IllegalAccessException {
+        Optional<CategoryDTO> optionalCategory = categoryJpaRepository.findById(id);
+        if(optionalCategory.isPresent()){
+            CategoryDTO fromDb = optionalCategory.get();
+            // bean utils will copy non null values from toBePatched to fromDb Category.
+            BeanUtilsBean.getInstance().getConvertUtils().register(false, false, 0);
+            beanUtils.getInstance().copyProperties(fromDb, toBePatchedCat);
+            System.out.println(toBePatchedCat);
+            System.out.println(fromDb);
+            categoryJpaRepository.save(fromDb);
+        }
+        return null;
     }
 
 
