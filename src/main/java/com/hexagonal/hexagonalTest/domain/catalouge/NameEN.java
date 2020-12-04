@@ -23,7 +23,6 @@ public class NameEN {
 
     }
 
-
     public String getNameEn() {
         return nameEn;
     }
@@ -32,7 +31,6 @@ public class NameEN {
         return nameEn;
     }
 
-    //todo: check if English? / Spring validation / Parent value object
 
 
 }

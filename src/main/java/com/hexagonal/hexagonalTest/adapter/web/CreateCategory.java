@@ -1,6 +1,7 @@
 package com.hexagonal.hexagonalTest.adapter.web;
 
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
+import com.hexagonal.hexagonalTest.domain.catalouge.Name;
 import com.hexagonal.hexagonalTest.domain.catalouge.NameEN;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +25,7 @@ public class CreateCategory {
 
 
     public Category asCategory(){
-        return new Category(new NameEN(name_en),name,parent,image,kind,priority,visibility);
+        return new Category(new NameEN(name_en),new Name(name),parent,image,kind,priority,visibility);
     }
 
 }
