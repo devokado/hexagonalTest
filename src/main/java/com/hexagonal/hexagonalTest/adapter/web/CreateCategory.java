@@ -18,12 +18,12 @@ public class CreateCategory {
     private String name;
     private int parent;
     private String image;
-    private Character kind;
+    private String kind;
     private int priority;
     private boolean visibility;
 
 
-    Category asCategory(){
+    public Category asCategory(){
         return new Category(new NameEN(name_en),name,parent,image,kind,priority,visibility);
     }
 

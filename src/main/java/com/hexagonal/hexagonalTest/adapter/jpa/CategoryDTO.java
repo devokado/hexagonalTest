@@ -25,7 +25,7 @@ import java.sql.Timestamp;
     private  String name;
     private int parent;
     private String image;
-    private Character kind;
+    private String kind;
     private int priority;
     private boolean visibility;
     private boolean deleted;
@@ -40,6 +40,7 @@ import java.sql.Timestamp;
     public static CategoryDTO from(Category category){
         return new CategoryDTO(category.getId(),category.getName_en().asRaw(),category.getName(),category.getParent(),category.getImage(),category.getKind(),category.getPriority(),category.isVisibility(),category.isDeleted(),category.getCdt(),category.getUdt());
     }
+
 
     Category asCategory(){
         return new Category(new NameEN(name_en),name,parent,image,kind,priority,visibility);

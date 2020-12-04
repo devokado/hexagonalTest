@@ -24,7 +24,7 @@ public class CategoryController {
     private ObjectMapper objectMapper;
 
 
-    @PostMapping(value = "/create")
+    @PostMapping(value = "create")
     public ResponseEntity<?> createCategory(@Valid @RequestBody CreateCategory createCategory) {
         Category category = createCategory.asCategory();
         categoryRepository.save(category);
@@ -35,27 +35,26 @@ public class CategoryController {
     public ResponseEntity<?> getAllCategories(Model model) {
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
-        return ResponseEntity.status(HttpStatus.FOUND).body(categories);
+        return ResponseEntity.status(HttpStatus.OK).body(categories);
 
     }
 
     @GetMapping("{categoryId}")
     public ResponseEntity<?> getCategoryById(@PathVariable("categoryId") Long id) {
-        Optional<Category> category = categoryRepository.findById(id);
-        return ResponseEntity.status(HttpStatus.FOUND).body(category);
+        Category category = categoryRepository.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(category);
     }
 
     @PutMapping("{categoryId}")
     public ResponseEntity<?> updateCategoryDetails(@PathVariable("categoryId") Long id,
                                                    @Valid @RequestBody CreateCategory createCategory) {
-        Optional<Category> category = categoryRepository.findById(id);
 
 
-        return ResponseEntity.status(HttpStatus.OK).body(categoryRepository.update(category.get(), createCategory));
+        return ResponseEntity.status(HttpStatus.OK).body(categoryRepository.update(createCategory,id));
 
 
     }
-    //todo: @PatchMapping
+    //todo: some errors
     @PatchMapping("{categoryId}")
     public ResponseEntity<?>  PatchById(@PathVariable("categoryId") Long id,@RequestBody Map<String, String> category) throws InvocationTargetException, IllegalAccessException {
         Category toBePatchedCat = objectMapper.convertValue(category,Category.class);

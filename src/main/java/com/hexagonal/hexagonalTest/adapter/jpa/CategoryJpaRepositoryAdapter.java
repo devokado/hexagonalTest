@@ -29,7 +29,7 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
     public Category save(Category category) {
         CategoryDTO dto= CategoryDTO.from(category);
         dto= categoryJpaRepository.save(dto);
-        return dto.asCategory();
+        return dto.asResponse();
     }
 
     @Override
@@ -41,9 +41,9 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
     }
 
     @Override
-    public Optional<Category> findById(Long id) {
+    public Category findById(Long id) {
         Optional<CategoryDTO> dto = categoryJpaRepository.findById(id);
-        return dto.map(CategoryDTO::asResponse);
+        return dto.get().asResponse();
     }
 
     @Override
@@ -52,8 +52,9 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
     }
 
     @Override
-    public Category update(Category category, CreateCategory createCategory) {
-        CategoryDTO dto = CategoryDTO.from(category);
+    public Category update(CreateCategory createCategory, Long id) {
+        Optional<CategoryDTO> category = categoryJpaRepository.findById(id);
+        CategoryDTO dto = category.get();
         dto.setName(createCategory.getName());
         dto.setName_en(createCategory.getName_en());
         dto.setParent(createCategory.getParent());
