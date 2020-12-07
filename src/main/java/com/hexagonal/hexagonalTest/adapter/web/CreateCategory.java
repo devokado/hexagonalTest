@@ -16,6 +16,7 @@ import javax.validation.Valid;
 public class CreateCategory {
     @Valid
     private String name_en;
+    @Valid
     private String name;
     private int parent;
     private String image;

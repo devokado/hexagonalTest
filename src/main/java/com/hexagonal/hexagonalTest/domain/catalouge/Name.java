@@ -1,8 +1,13 @@
 package com.hexagonal.hexagonalTest.domain.catalouge;
 
+import lombok.Data;
+import lombok.ToString;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Data
+@ToString
 public class Name {
 
     @NotNull(message = "Name can not be null!")
@@ -13,9 +18,6 @@ public class Name {
         this.name = name;
     }
 
-    public String getName() {
-        return name;
-    }
     public String asRaw(){
         return name;
     }

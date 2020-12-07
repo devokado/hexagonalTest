@@ -56,6 +56,7 @@ public class ValidationsTest {
 
         assertThat(violations.size()).isEqualTo(1);
 
+
     }
     @Test
     public void whenNameIsSmallerThan4Character(){
@@ -67,4 +68,5 @@ public class ValidationsTest {
         assertThat(violations.size()).isEqualTo(1);
 
     }
+
 }

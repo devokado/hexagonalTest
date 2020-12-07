@@ -63,7 +63,7 @@ class CategoryControllerTest {
     @Test
     @DisplayName("Create new category - Post /api/v1/categories/create")
     public void createCategory() throws Exception {
-        CreateCategory newCat = new CreateCategory("name_en", "name", 1, "ss","2", 1, true);
+        CreateCategory newCat = new CreateCategory(null, null, 1, "ss","2", 1, true);
         Category mockCat = new Category(1L,new NameEN("name_en"), new Name("name"), 1, "ss", "2", 1, true);
 
         doReturn(mockCat).when(categoryRepository).save(ArgumentMatchers.any());

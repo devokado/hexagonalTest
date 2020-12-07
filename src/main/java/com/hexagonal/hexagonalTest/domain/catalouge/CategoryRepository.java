@@ -4,7 +4,6 @@ import com.hexagonal.hexagonalTest.adapter.web.CreateCategory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Optional;
 
 public interface CategoryRepository {
     Category save(Category category);

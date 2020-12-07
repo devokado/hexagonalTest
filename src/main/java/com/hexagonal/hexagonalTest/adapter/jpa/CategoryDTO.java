@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import java.sql.Timestamp;
 
 @NoArgsConstructor
@@ -21,8 +22,9 @@ import java.sql.Timestamp;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+   @Valid
     private String name_en;
+   @Valid
     private  String name;
     private int parent;
     private String image;
@@ -37,7 +39,6 @@ import java.sql.Timestamp;
 
 
 
-//todo: No data && modelMapper ??
     public static CategoryDTO from(Category category){
         return new CategoryDTO(category.getId(),category.getName_en().asRaw(),category.getName().asRaw(),category.getParent(),category.getImage(),category.getKind(),category.getPriority(),category.isVisibility(),category.isDeleted(),category.getCdt(),category.getUdt());
     }

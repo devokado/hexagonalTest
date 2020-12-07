@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 
+import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
@@ -17,8 +18,9 @@ public class Category {
     @Getter
     @Setter
     private Long id;
-
+    @Valid
     private  NameEN name_en;
+    @Valid
     private  Name name;
     private  int parent;
     private  String image;
@@ -37,7 +39,7 @@ public class Category {
         Date date = new Date();
         long time = date.getTime();
         Timestamp ts = new Timestamp(time);
-        this.name_en = name_en;
+        this.name_en =name_en ;
         this.name = name;
         this.parent = parent;
         this.image = image;

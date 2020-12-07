@@ -13,7 +13,6 @@ import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/categories")

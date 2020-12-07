@@ -1,7 +1,6 @@
 package com.hexagonal.hexagonalTest.domain.catalouge;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -23,9 +22,7 @@ public class NameEN {
 
     }
 
-    public String getNameEn() {
-        return nameEn;
-    }
+
 
     public String asRaw(){
         return nameEn;
