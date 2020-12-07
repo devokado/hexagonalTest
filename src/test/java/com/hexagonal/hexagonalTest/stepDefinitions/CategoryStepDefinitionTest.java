@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 @RunWith(Cucumber.class)
 public class CategoryStepDefinitionTest extends AbstractSpringConfigurationTest {
 
-    private static final Logger logger = (Logger) LoggerFactory.getLogger(CategoryStepDefinitionTest.class);
+//    private static final Logger logger = (Logger) LoggerFactory.getLogger(CategoryStepDefinitionTest.class);
 
     private String name_en;
     private String name;
@@ -40,27 +40,32 @@ public class CategoryStepDefinitionTest extends AbstractSpringConfigurationTest 
         priority = Integer.parseInt(obj.get(0).get(5));
         visibility = Boolean.parseBoolean(obj.get(0).get(6));
 
-        if (logger.isInfoEnabled()) {
-            logger.info("Category to be saved with name {}", name);
-        }
+//        if (logger.isInfoEnabled()) {
+//            logger.info("Category to be saved with name {}", name);
+//        }
     }
 
     @When("^the client calls \"([^\"]*)\" with the given detail$")
     public void the_client_calls_with_the_given_detail(String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+//        throw new PendingException();
     }
 
     @Then("^the client receive status code of (\\d+)$")
     public void the_client_receive_status_code_of(int arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+//        throw new PendingException();
     }
 
     @Then("^the response contains name \"([^\"]*)\"$")
     public void the_response_contains_name(String arg1) throws Throwable {
         // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+//        throw new PendingException();
     }
 
+    @When("^the client calls POST \"([^\"]*)\" with the given detail$")
+    public void theClientCallsPOSTWithTheGivenDetail(String arg0) throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+//        throw new PendingException();
+    }
 }
