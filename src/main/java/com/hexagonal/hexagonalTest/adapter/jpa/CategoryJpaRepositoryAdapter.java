@@ -28,7 +28,7 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
     @Override
     public Category save(Category category) {
         CategoryDTO dto= CategoryDTO.from(category);
-        dto= categoryJpaRepository.save(dto);
+        dto= categoryJpaRepository.saveAndFlush(dto);
         return dto.asResponse();
     }
 

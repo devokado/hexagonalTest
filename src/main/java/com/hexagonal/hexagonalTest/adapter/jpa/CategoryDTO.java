@@ -13,8 +13,7 @@ import javax.persistence.*;
 import javax.validation.Valid;
 import java.sql.Timestamp;
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Data
 @Entity
 @Table(name = "category")
@@ -37,7 +36,22 @@ import java.sql.Timestamp;
     @UpdateTimestamp
     private Timestamp udt;
 
+    public CategoryDTO() {
+    }
 
+    public CategoryDTO(Long id, @Valid String name_en, @Valid String name, int parent, String image, String kind, int priority, boolean visibility, boolean deleted, Timestamp cdt, Timestamp udt) {
+        this.id = id;
+        this.name_en = name_en;
+        this.name = name;
+        this.parent = parent;
+        this.image = image;
+        this.kind = kind;
+        this.priority = priority;
+        this.visibility = visibility;
+        this.deleted = deleted;
+        this.cdt = cdt;
+        this.udt = udt;
+    }
 
     public static CategoryDTO from(Category category){
         return new CategoryDTO(category.getId(),category.getName_en().asRaw(),category.getName().asRaw(),category.getParent(),category.getImage(),category.getKind(),category.getPriority(),category.isVisibility(),category.isDeleted(),category.getCdt(),category.getUdt());

@@ -2,8 +2,6 @@ package com.hexagonal.hexagonalTest.domain.catalouge;
 
 
 
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 
@@ -15,8 +13,7 @@ import java.util.Objects;
 @ToString
 public class Category {
 
-    @Getter
-    @Setter
+
     private Long id;
     @Valid
     private  NameEN name_en;
@@ -67,6 +64,13 @@ public class Category {
         this.udt = ts;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public NameEN getName_en() {
         return name_en;
