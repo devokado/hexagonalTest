@@ -1,3 +1,4 @@
 # hexagonalTest
 Hexagonal demo
-https://wakatime.com/badge/github/devokado/hexagonalTest.svg
+<img src="https://wakatime.com/badge/github/devokado/hexagonalTest.svg" alt="Waka time">
+
