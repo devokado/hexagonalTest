@@ -7,6 +7,7 @@ import org.apache.commons.beanutils.BeanUtilsBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +27,7 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
 
 
     @Override
-    public Category save(Category category) {
+    public Category save(@Valid Category category) {
         CategoryDTO dto= CategoryDTO.from(category);
         dto= categoryJpaRepository.saveAndFlush(dto);
         return dto.asResponse();

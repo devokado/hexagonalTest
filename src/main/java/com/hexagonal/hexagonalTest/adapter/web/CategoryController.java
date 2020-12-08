@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -24,7 +25,7 @@ public class CategoryController {
 
 
     @PostMapping(value = "create")
-    public ResponseEntity<?> createCategory(@Valid @RequestBody CreateCategory createCategory) {
+    public ResponseEntity<?> createCategory(@RequestBody @Valid CreateCategory createCategory) {
         Category category = createCategory.asCategory();
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryRepository.save(category));
     }
@@ -33,7 +34,7 @@ public class CategoryController {
     public ResponseEntity<?> getAllCategories(Model model) {
         List<Category> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
-        return ResponseEntity.status(HttpStatus.OK).body(categories);
+        return ResponseEntity.status(HttpStatus.OK).body(model);
 
     }
 

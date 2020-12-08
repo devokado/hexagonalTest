@@ -6,6 +6,7 @@ import com.hexagonal.hexagonalTest.domain.catalouge.NameEN;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 
@@ -24,7 +25,7 @@ public class CreateCategory {
     private int priority;
     private boolean visibility;
 
-
+    @Valid
     public Category asCategory(){
         return new Category(new NameEN(name_en),new Name(name),parent,image,kind,priority,visibility);
     }

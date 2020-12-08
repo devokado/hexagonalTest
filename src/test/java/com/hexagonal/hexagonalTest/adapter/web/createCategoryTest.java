@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Set;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class createCategoryTest {
@@ -31,7 +32,7 @@ public class createCategoryTest {
     @Test
     public void createCategoryWithNullEntry(){
         validator = Validation.buildDefaultValidatorFactory().getValidator();
-        CreateCategory createCategory = new CreateCategory(null,null,1,"image","22",2,true);
+        CreateCategory createCategory = new CreateCategory("شلوار",null,1,"image","22",2,true);
        // Category category = new Category(new NameEN(null),new Name(null),2,"sss","22",3,true);
         Category asCategory = createCategory.asCategory();
         validator.validate(asCategory).stream().forEach(violation -> System.out.println(violation.getMessage()));
@@ -39,6 +40,14 @@ public class createCategoryTest {
 
         assertThat(violations.size()).isEqualTo(2);
 
+    }
+    @Test
+    public void categoryWithNullReturnError(){
+        validator = Validation.buildDefaultValidatorFactory().getValidator();
+        Category category =new Category(new NameEN(null),new Name(null),2,"sss","22",3,true);
+        validator.validate(category).stream().forEach(violation -> System.out.println(violation.getMessage()));
+        Set<ConstraintViolation<Category>> violations = validator.validate(category);
+        assertThat(violations.size()).isEqualTo(2);
     }
 
 

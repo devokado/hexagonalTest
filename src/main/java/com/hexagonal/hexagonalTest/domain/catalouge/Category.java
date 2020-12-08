@@ -47,7 +47,7 @@ public class Category {
         this.cdt = ts;
         this.udt = ts;
     }
-    public Category(Long id,NameEN name_en, Name name, int parent, String image, String kind, int priority, boolean visibility) {
+    public Category(Long id, NameEN name_en, Name name, int parent, String image, String kind, int priority, boolean visibility) {
         Date date = new Date();
         long time = date.getTime();
         Timestamp ts = new Timestamp(time);
