@@ -31,7 +31,6 @@ public class Category {
     public Category() {
     }
 
-    //todo: solid setter? No data
     public Category(NameEN name_en, Name name, int parent, String image, String kind, int priority, boolean visibility) {
         Date date = new Date();
         long time = date.getTime();

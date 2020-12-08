@@ -25,7 +25,7 @@ public class CategoryController {
 
 
     @PostMapping(value = "create")
-    public ResponseEntity<?> createCategory(@RequestBody @Valid CreateCategory createCategory) {
+    public ResponseEntity<?> createCategory(@Valid @RequestBody CreateCategory createCategory) {
         Category category = createCategory.asCategory();
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryRepository.save(category));
     }

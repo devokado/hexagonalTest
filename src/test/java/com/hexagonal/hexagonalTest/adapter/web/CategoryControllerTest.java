@@ -73,7 +73,7 @@ class CategoryControllerTest {
                 .content(new ObjectMapper().writeValueAsString(newCat)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.name.name",is("name")));
+                .andExpect(jsonPath("$.name.name",is(newCat.getName())));
 
 
     }
