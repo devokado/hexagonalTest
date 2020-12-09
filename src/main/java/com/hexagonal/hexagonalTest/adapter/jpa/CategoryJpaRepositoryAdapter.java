@@ -28,11 +28,12 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
 
 
     @Override
-    public ResponseCategory save(@Valid Category category) {
+    public Category save(@Valid Category category) {
         CategoryDTO dto= CategoryDTO.from(category);
         dto= categoryJpaRepository.saveAndFlush(dto);
-        ResponseCategory response = ResponseCategory.from(dto.asResponse());
-        return response;
+        Category dtoAsResponse = dto.asResponse();
+
+        return dtoAsResponse;
     }
 
     @Override

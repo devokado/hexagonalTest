@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public interface CategoryRepository {
-    ResponseCategory save(Category category);
+    Category save(Category category);
 
     List<Category> findAll();
 
