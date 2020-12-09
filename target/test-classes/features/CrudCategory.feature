@@ -41,10 +41,6 @@ Feature: Crud on category
       |visibility  |true         |
 
 
-  Scenario: delete the category with category id
-    When the client calls DELETE "api/v1/categories/{id}" with id
-    Then the client receive status code of 204
-
 
   Scenario: Full update the category with category id
     When the client calls PUT "api/v1/categories/{id}" with id and following detail
@@ -66,6 +62,13 @@ Feature: Crud on category
       |kind        |2            |
       |priority    |2            |
       |visibility  |true         |
+
+
+  Scenario: delete the category with category id
+    When the client calls DELETE "api/v1/categories/{id}" with id
+    Then the client receive status code of 204
+    And the client calls GET "api/v1/categories/{id}" with id
+    And the client receive status code of 404
 
 
 

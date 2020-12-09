@@ -80,6 +80,7 @@ public class CategoryStepDefinitionTest extends AbstractSpringConfigurationTest 
         ObjectMapper mapper = new ObjectMapper();
         Map<String, String> responseMap = mapper.readValue(responseBody, Map.class);
         id =  String.valueOf(responseMap.get("id"));
+
     }
 
     @When("^the client calls GET \"([^\"]*)\" with id$")
