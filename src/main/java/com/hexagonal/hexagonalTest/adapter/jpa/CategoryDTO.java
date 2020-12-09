@@ -17,14 +17,14 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @Table(name = "category")
- class CategoryDTO {
+class CategoryDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-   @Valid
+    @Valid
     private String name_en;
-   @Valid
-    private  String name;
+    @Valid
+    private String name;
     private int parent;
     private String image;
     private String kind;
@@ -39,7 +39,7 @@ import java.sql.Timestamp;
     public CategoryDTO() {
     }
 
-    public CategoryDTO(Long id, @Valid String name_en, @Valid String name, int parent, String image, String kind, int priority, boolean visibility, boolean deleted, Timestamp cdt, Timestamp udt) {
+    public CategoryDTO(Long id, String name_en, String name, int parent, String image, String kind, int priority, boolean visibility, boolean deleted, Timestamp cdt, Timestamp udt) {
         this.id = id;
         this.name_en = name_en;
         this.name = name;
@@ -53,17 +53,19 @@ import java.sql.Timestamp;
         this.udt = udt;
     }
 
-    public static CategoryDTO from(Category category){
-        return new CategoryDTO(category.getId(),category.getName_en().asRaw(),category.getName().asRaw(),category.getParent(),category.getImage(),category.getKind(),category.getPriority(),category.isVisibility(),category.isDeleted(),category.getCdt(),category.getUdt());
+    public static CategoryDTO from(Category category) {
+        return new CategoryDTO(category.getId(), category.getName_en().asRaw(), category.getName().asRaw(), category.getParent(), category.getImage(), category.getKind(), category.getPriority(), category.isVisibility(), category.isDeleted(), category.getCdt(), category.getUdt());
     }
 
 
-    Category asCategory(){
-        return new Category(new NameEN(name_en),new Name(name),parent,image,kind,priority,visibility);
+    Category asCategory() {
+        return new Category(new NameEN(name_en), new Name(name), parent, image, kind, priority, visibility);
     }
-    Category asResponse(){
-        return new Category(id,new NameEN(name_en),new Name(name),parent,image,kind,priority,visibility);
+
+    Category asResponse() {
+        return new Category(id, new NameEN(name_en), new Name(name), parent, image, kind, priority, visibility);
     }
+
 
 
 }

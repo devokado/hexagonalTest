@@ -1,12 +1,13 @@
 package com.hexagonal.hexagonalTest.domain.catalouge;
 
 import com.hexagonal.hexagonalTest.adapter.web.CreateCategory;
+import com.hexagonal.hexagonalTest.adapter.web.ResponseCategory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public interface CategoryRepository {
-    Category save(Category category);
+    ResponseCategory save(Category category);
 
     List<Category> findAll();
 

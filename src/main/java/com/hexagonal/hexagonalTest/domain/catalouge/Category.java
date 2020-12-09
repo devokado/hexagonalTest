@@ -1,16 +1,11 @@
 package com.hexagonal.hexagonalTest.domain.catalouge;
 
-
-
-import lombok.ToString;
-
-
 import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
-@ToString
+
 public class Category {
 
 
@@ -124,5 +119,22 @@ public class Category {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return "asResponse{" +
+                "id ="+id +
+                ",NameEn =" + name_en +
+                ", name =" + name +
+                ", parent =" + parent +
+                ", image =" + image +
+                ", kind =" + kind +
+                ", priority =" + priority +
+                ", visibility =" + visibility +
+                ", deleted =" + deleted +
+                ", cdt =" + cdt +
+                ", udt =" + udt +
+                '}';
     }
 }

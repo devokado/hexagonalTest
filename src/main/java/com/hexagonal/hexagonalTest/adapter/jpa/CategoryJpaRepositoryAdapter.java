@@ -1,6 +1,7 @@
 package com.hexagonal.hexagonalTest.adapter.jpa;
 
 import com.hexagonal.hexagonalTest.adapter.web.CreateCategory;
+import com.hexagonal.hexagonalTest.adapter.web.ResponseCategory;
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
 import com.hexagonal.hexagonalTest.domain.catalouge.CategoryRepository;
 import org.apache.commons.beanutils.BeanUtilsBean;
@@ -27,10 +28,11 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
 
 
     @Override
-    public Category save(@Valid Category category) {
+    public ResponseCategory save(@Valid Category category) {
         CategoryDTO dto= CategoryDTO.from(category);
         dto= categoryJpaRepository.saveAndFlush(dto);
-        return dto.asResponse();
+        ResponseCategory response = ResponseCategory.from(dto.asResponse());
+        return response;
     }
 
     @Override
