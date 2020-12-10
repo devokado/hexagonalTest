@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/v1/categories")
@@ -33,22 +36,23 @@ public class CategoryController {
     @GetMapping()
     public ResponseEntity<?> getAllCategories(Model model) {
         List<Category> categories = categoryRepository.findAll();
-        model.addAttribute("categories", categories);
-        return ResponseEntity.status(HttpStatus.OK).body(model);
-
+        List<ResponseCategory> responseCategories = categories
+                .stream()
+                .map(category -> ResponseCategory.from(category))
+                .collect(Collectors.toList());
+        return ResponseEntity.status(HttpStatus.OK).body(responseCategories);
     }
 
     @GetMapping("{categoryId}")
     public ResponseEntity<?> getCategoryById(@PathVariable("categoryId") Long id) {
         Category category = categoryRepository.findById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(category);
+        ResponseCategory responseCategory = ResponseCategory.from(category);
+        return ResponseEntity.status(HttpStatus.OK).body(responseCategory);
     }
 
     @PutMapping("{categoryId}")
     public ResponseEntity<?> updateCategoryDetails(@PathVariable("categoryId") Long id,
                                                    @Valid @RequestBody CreateCategory createCategory) {
-
-
         return ResponseEntity.status(HttpStatus.OK).body(categoryRepository.update(createCategory,id));
 
 

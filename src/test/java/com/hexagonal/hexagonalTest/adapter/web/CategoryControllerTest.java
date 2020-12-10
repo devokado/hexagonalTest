@@ -47,9 +47,9 @@ class CategoryControllerTest {
 
         CreateCategory newCategory1 = new CreateCategory("Food", "Food", 1, "ss","2", 1, true);
         CreateCategory newCategory2 = new CreateCategory("Car", "Car", 1, "ss", "2", 1, true);
-        List<CreateCategory> categories = new ArrayList<>();
-        categories.add(newCategory1);
-        categories.add(newCategory2);
+        List<Category> categories = new ArrayList<>();
+        categories.add(newCategory1.asCategory());
+        categories.add(newCategory2.asCategory());
 
         doReturn(categories).when(categoryRepository).findAll();
 
@@ -99,7 +99,7 @@ class CategoryControllerTest {
         mockMvc.perform(get("/api/v1/categories/{categoryId}",mockCat.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.name.name",is("shampoo new")));
+                .andExpect(jsonPath("$.name",is("shampoo new")));
     }
 
 
