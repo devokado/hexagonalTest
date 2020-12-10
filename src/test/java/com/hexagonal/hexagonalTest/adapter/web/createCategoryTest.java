@@ -27,7 +27,7 @@ public class createCategoryTest {
         CreateCategory createCategory = new CreateCategory("phone","phone",4,"sss", "2",1,true);
         Category expectedCategory = new Category(new NameEN("phone"),new Name("phone"),4,"sss","2",1,true);
         assertThat(createCategory.asCategory())
-                .isEqualToIgnoringGivenFields(expectedCategory, "id");
+                .isEqualToIgnoringGivenFields(expectedCategory, "id","udt","cdt");
     }
     @Test
     public void createCategoryWithNullEntry(){
