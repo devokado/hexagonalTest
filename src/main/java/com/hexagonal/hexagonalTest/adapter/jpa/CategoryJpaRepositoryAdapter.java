@@ -1,16 +1,21 @@
 package com.hexagonal.hexagonalTest.adapter.jpa;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hexagonal.hexagonalTest.adapter.web.CreateCategory;
-import com.hexagonal.hexagonalTest.adapter.web.ResponseCategory;
+import com.hexagonal.hexagonalTest.adapter.web.UpdateCategory;
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
 import com.hexagonal.hexagonalTest.domain.catalouge.CategoryRepository;
-import org.apache.commons.beanutils.BeanUtilsBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.ReflectionUtils;
 
 import javax.validation.Valid;
+
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -21,6 +26,8 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
     private NullAwareBeanUtilsBean beanUtils;
 
     private final CategoryJpaRepository categoryJpaRepository;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     public CategoryJpaRepositoryAdapter(CategoryJpaRepository categoryJpaRepository) {
         this.categoryJpaRepository = categoryJpaRepository;
@@ -32,7 +39,6 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
         CategoryDTO dto= CategoryDTO.from(category);
         dto= categoryJpaRepository.saveAndFlush(dto);
         Category dtoAsResponse = dto.asResponse();
-
         return dtoAsResponse;
     }
 
@@ -71,18 +77,29 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
     }
 
     @Override
-    public Category patch(Long id,Category toBePatchedCat) throws InvocationTargetException, IllegalAccessException {
+    public Category patch(Long id, UpdateCategory category) throws InvocationTargetException, IllegalAccessException {
+        CategoryDTO toBePatchedCat = objectMapper.convertValue(category,CategoryDTO.class);
         Optional<CategoryDTO> optionalCategory = categoryJpaRepository.findById(id);
-        if(optionalCategory.isPresent()){
-            CategoryDTO fromDb = optionalCategory.get();
-            // bean utils will copy non null values from toBePatched to fromDb Category.
-            BeanUtilsBean.getInstance().getConvertUtils().register(false, false, 0);
-            beanUtils.getInstance().copyProperties(fromDb, toBePatchedCat);
-            System.out.println(toBePatchedCat);
-            System.out.println(fromDb);
+        CategoryDTO fromDb = optionalCategory.get();
+
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> changes = mapper.convertValue(toBePatchedCat, new TypeReference<>() {
+            });
+
+
+            changes.forEach((k, v) -> {
+                Field field = ReflectionUtils.findField(CategoryDTO.class, k);
+                if (field != null) {
+                    if (v != null) {
+                        field.setAccessible(true);
+                        ReflectionUtils.setField(field, fromDb, v);
+                    }
+                }
+            });
             categoryJpaRepository.save(fromDb);
-        }
-        return null;
+
+
+        return fromDb.asResponse();
     }
 
 

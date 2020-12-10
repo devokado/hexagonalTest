@@ -67,8 +67,8 @@ Feature: Crud on category
   Scenario: delete the category with category id
     When the client calls DELETE "api/v1/categories/{id}" with id
     Then the client receive status code of 204
-    And the client calls GET "api/v1/categories/{id}" with id
-    And the client receive status code of 404
+    When the client calls GET "api/v1/categories/{id}" with id
+    Then the client receive status code of 404
 
 
 

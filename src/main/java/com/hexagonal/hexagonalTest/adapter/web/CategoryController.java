@@ -19,8 +19,7 @@ import java.util.Map;
 public class CategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
-    @Autowired
-    private ObjectMapper objectMapper;
+
 
 
     @PostMapping(value = "create")
@@ -56,9 +55,9 @@ public class CategoryController {
     }
     //todo: some errors
     @PatchMapping("{categoryId}")
-    public ResponseEntity<?>  PatchById(@PathVariable("categoryId") Long id,@RequestBody Map<String, String> category) throws InvocationTargetException, IllegalAccessException {
-        Category toBePatchedCat = objectMapper.convertValue(category,Category.class);
-       return ResponseEntity.status(HttpStatus.OK).body(categoryRepository.patch(id,toBePatchedCat));
+    public ResponseEntity<?>  PatchById(@PathVariable("categoryId") Long id,@RequestBody UpdateCategory category) throws InvocationTargetException, IllegalAccessException {
+        ResponseCategory response =ResponseCategory.from(categoryRepository.patch(id,category));
+       return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("{categoryId}")
