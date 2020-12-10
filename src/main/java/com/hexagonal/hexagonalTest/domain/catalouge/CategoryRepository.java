@@ -17,5 +17,5 @@ public interface CategoryRepository {
     void deleteById(Long id);
 
     Category update( CreateCategory createCategory,Long id);
-    Category patch(Long id, UpdateCategory category) throws InvocationTargetException, IllegalAccessException;
+    Category patch(Long id, UpdateCategory category);
 }

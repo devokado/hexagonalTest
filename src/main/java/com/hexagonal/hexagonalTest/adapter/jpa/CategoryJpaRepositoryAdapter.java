@@ -77,7 +77,7 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
     }
 
     @Override
-    public Category patch(Long id, UpdateCategory category) throws InvocationTargetException, IllegalAccessException {
+    public Category patch(Long id, UpdateCategory category){
         CategoryDTO toBePatchedCat = objectMapper.convertValue(category,CategoryDTO.class);
         Optional<CategoryDTO> optionalCategory = categoryJpaRepository.findById(id);
         CategoryDTO fromDb = optionalCategory.get();

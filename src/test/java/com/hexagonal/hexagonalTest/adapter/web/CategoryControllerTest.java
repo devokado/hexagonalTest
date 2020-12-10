@@ -18,6 +18,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,8 +64,8 @@ class CategoryControllerTest {
     @Test
     @DisplayName("Create new category - Post /api/v1/categories/create")
     public void createCategory() throws Exception {
-        CreateCategory newCat = new CreateCategory(null, null, 1, "ss","2", 1, true);
-        Category mockCat = new Category(1L,new NameEN("name_en"), new Name("name"), 1, "ss", "2", 1, true);
+        CreateCategory newCat = new CreateCategory("nameen", "name", 1, "ss","2", 1, true);
+        Category mockCat = new Category(1L,new NameEN("nameen"), new Name("name"), 1, "ss", "2", 1, true);
 
         doReturn(mockCat).when(categoryRepository).save(ArgumentMatchers.any());
 
@@ -73,12 +74,12 @@ class CategoryControllerTest {
                 .content(new ObjectMapper().writeValueAsString(newCat)))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.name.name",is(newCat.getName())));
+                .andExpect(jsonPath("$.name",is(newCat.getName())));
 
 
     }
     @Test
-    @DisplayName("Update category - put /api/v1/categories/{categoryId} ")
+    @DisplayName("Update category - Put /api/v1/categories/{categoryId} ")
     public void updateCategory() throws Exception{
         CreateCategory newCat = new CreateCategory("shampoo", "shampoo", 1, "new.img","2", 1, true);
         Category mockCat = new Category(1L,new NameEN("shampoo new"), new Name("shampoo new"), 1, "img new", "2", 1, true);
@@ -103,12 +104,25 @@ class CategoryControllerTest {
 
 
     @Test
-    @DisplayName("delete category by id- delete /api/v1/categories/{categoryId} ")
+    @DisplayName("delete category by id - Delete /api/v1/categories/{categoryId} ")
     public void deleteById() throws Exception {
         Category mockCat = new Category(1L, new NameEN("shampoo new"), new Name("shampoo new"), 1, "img new", "2", 1, true);
         doNothing().when(categoryRepository).deleteById(mockCat.getId());
         mockMvc.perform(delete("/api/v1/categories/{categoryId}", mockCat.getId()))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("Patch category by id - Patch /api/v1/categories/{categoryId}")
+    public void PatchTest() throws Exception {
+        UpdateCategory toBePatch = new UpdateCategory(null,null,null,null,null,null,true);
+        Category mockCat =  new Category(1L, new NameEN("shampoo new"), new Name("shampoo new"), 1, "img new", "2", 1, true);
+        doReturn(mockCat).when(categoryRepository).patch(mockCat.getId(),toBePatch);
+        mockMvc.perform(patch("/api/v1/categories/{categoryId}",mockCat.getId())
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(new ObjectMapper().writeValueAsString(toBePatch)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.visibility",is(toBePatch.isVisibility())));
     }
 
 

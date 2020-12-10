@@ -55,7 +55,7 @@ public class CategoryController {
     }
     //todo: some errors
     @PatchMapping("{categoryId}")
-    public ResponseEntity<?>  PatchById(@PathVariable("categoryId") Long id,@RequestBody UpdateCategory category) throws InvocationTargetException, IllegalAccessException {
+    public ResponseEntity<?>  PatchById(@PathVariable("categoryId") Long id,@RequestBody UpdateCategory category){
         ResponseCategory response =ResponseCategory.from(categoryRepository.patch(id,category));
        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
