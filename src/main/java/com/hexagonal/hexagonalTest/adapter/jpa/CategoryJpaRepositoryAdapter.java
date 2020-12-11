@@ -73,7 +73,8 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
         dto.setImage(createCategory.getImage());
         dto.setVisibility(createCategory.isVisibility());
         dto = categoryJpaRepository.save(dto);
-        return dto.asCategory();
+
+        return dto.asResponse();
     }
 
     @Override
