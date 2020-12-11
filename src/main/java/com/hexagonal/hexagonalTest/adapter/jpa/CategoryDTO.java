@@ -25,12 +25,12 @@ class CategoryDTO {
     private String name_en;
     @Valid
     private String name;
-    private int parent;
+    private Integer parent;
     private String image;
     private String kind;
-    private int priority;
-    private boolean visibility;
-    private boolean deleted;
+    private Integer priority;
+    private Boolean visibility;
+    private Boolean deleted;
     @CreationTimestamp
     private Timestamp cdt;
     @UpdateTimestamp
