@@ -2,6 +2,7 @@ package com.hexagonal.hexagonalTest.stepDefinitions;
 
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cucumber.api.DataTable;
 import cucumber.api.junit.Cucumber;
@@ -17,6 +18,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,14 +56,28 @@ public class CategoryStepDefinitionTest extends AbstractSpringConfigurationTest 
     @Then("^the response has the following attribute$")
     public void the_response_has_the_following_attribute(DataTable table) throws Throwable {
         List<Map<String, String>> attr =  table.asMaps(String.class, String.class);
-        logger.info("***********{}",attr);
+
         if(response != null && response.getStatusCode().is2xxSuccessful()){
             String responseBody = response.getBody();
             ObjectMapper mapper = new ObjectMapper();
             Map<String, String> responseMap = mapper.readValue(responseBody, Map.class);
-            logger.info("************{}",responseMap);
             for(int i=0; i<attr.size(); i++) {
                 assertEquals(attr.get(i).get("value"), String.valueOf(responseMap.get(attr.get(i).get("attribute"))));
+            }
+
+        }
+    }
+    @Then("^the check response value type$")
+    public void the_check_response_value_type(DataTable table) throws Throwable {
+        List<Map<String, String>> attr =  table.asMaps(String.class, String.class);
+        if(response != null && response.getStatusCode().is2xxSuccessful()){
+            String responseBody = response.getBody();
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, String> responseMap = mapper.readValue(responseBody, Map.class);
+            for(int i=0; i<attr.size(); i++) {
+                 Pattern PATTERN = Pattern.compile(attr.get(i).get("type"));
+                 Matcher matcher = PATTERN.matcher(String.valueOf(responseMap.get(attr.get(i).get("attribute"))));
+                assertTrue(matcher.matches());
             }
 
         }
