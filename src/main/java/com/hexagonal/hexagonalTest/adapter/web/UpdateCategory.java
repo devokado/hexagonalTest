@@ -29,7 +29,7 @@ public class UpdateCategory {
     private String image;
     private String kind;
     private Integer priority;
-    private boolean visibility;
+    private Boolean visibility;
 
     public Category asCategory(){
         return new Category(new NameEN(name_en),new Name(name),parent,image,kind,priority,visibility);

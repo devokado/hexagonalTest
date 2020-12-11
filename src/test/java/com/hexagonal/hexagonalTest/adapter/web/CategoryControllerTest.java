@@ -122,7 +122,7 @@ class CategoryControllerTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(new ObjectMapper().writeValueAsString(toBePatch)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.visibility",is(toBePatch.isVisibility())));
+                .andExpect(jsonPath("$.visibility",is(toBePatch.getVisibility())));
     }
 
 
