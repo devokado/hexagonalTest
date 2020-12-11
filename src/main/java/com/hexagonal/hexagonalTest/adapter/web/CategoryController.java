@@ -1,6 +1,6 @@
 package com.hexagonal.hexagonalTest.adapter.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
 import com.hexagonal.hexagonalTest.domain.catalouge.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @RestController
@@ -53,14 +49,15 @@ public class CategoryController {
     @PutMapping("{categoryId}")
     public ResponseEntity<?> updateCategoryDetails(@PathVariable("categoryId") Long id,
                                                    @Valid @RequestBody CreateCategory createCategory) {
-        return ResponseEntity.status(HttpStatus.OK).body(categoryRepository.update(createCategory,id));
+        ResponseCategory responseCategory = ResponseCategory.from(categoryRepository.update(createCategory,id));
+        return ResponseEntity.status(HttpStatus.OK).body(responseCategory);
 
 
     }
     //todo: some errors
     @PatchMapping("{categoryId}")
     public ResponseEntity<?>  PatchById(@PathVariable("categoryId") Long id,@RequestBody UpdateCategory category){
-        ResponseCategory response =ResponseCategory.from(categoryRepository.patch(id,category));
+        ResponseCategory response = ResponseCategory.from(categoryRepository.patch(id,category));
        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

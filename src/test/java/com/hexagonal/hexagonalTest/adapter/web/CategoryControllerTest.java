@@ -64,8 +64,8 @@ class CategoryControllerTest {
     @Test
     @DisplayName("Create new category - Post /api/v1/categories/create")
     public void createCategory() throws Exception {
-        CreateCategory newCat = new CreateCategory("nameen", "name", 1, "ss","2", 1, true);
-        Category mockCat = new Category(1L,new NameEN("nameen"), new Name("name"), 1, "ss", "2", 1, true);
+        CreateCategory newCat = new CreateCategory("phone", "name", 1, "ss","2", 1, true);
+        Category mockCat = new Category(1L,new NameEN("phone"), new Name("name"), 1, "ss", "2", 1, true);
 
         doReturn(mockCat).when(categoryRepository).save(ArgumentMatchers.any());
 
@@ -89,10 +89,10 @@ class CategoryControllerTest {
         .content(new ObjectMapper().writeValueAsString(newCat)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.name.name",is("shampoo new")));
+                .andExpect(jsonPath("$.name",is("shampoo new")));
     }
     @Test
-    @DisplayName("Get category by id- Get /api/v1/categories/{categoryId} ")
+    @DisplayName("Get category by id - Get /api/v1/categories/{categoryId} ")
     public void getById() throws Exception{
         Category mockCat = new Category(1L,new NameEN("shampoo new"), new Name("shampoo new"), 1, "img new", "2", 1, true);
         doReturn(mockCat).when(categoryRepository).findById(mockCat.getId());
