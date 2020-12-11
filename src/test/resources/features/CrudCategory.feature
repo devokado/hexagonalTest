@@ -45,7 +45,7 @@ Feature: Crud on category
   Scenario: Full update the category with category id
     When the client calls PUT "api/v1/categories/{id}" with id and following detail
       |attribute   |value        |
-      |medicine    |medicine     |
+      |name        |medicine     |
       |name_en     |phone        |
       |parent      |4            |
       |image       |image.png    |
@@ -55,7 +55,7 @@ Feature: Crud on category
     Then the client receive status code of 200
     And the response has the following attribute
       |attribute   |value        |
-      |medicine    |medicine     |
+      |name        |medicine     |
       |name_en     |phone        |
       |parent      |4            |
       |image       |image.png    |
@@ -63,12 +63,25 @@ Feature: Crud on category
       |priority    |2            |
       |visibility  |true         |
 
+  Scenario: Partial update the the category with category id
+    When the client calls PATCH "api/v1/categories/{id}" with id and  "name" "new_phone"
+    Then the client receive status code of 200
+    And the response has the following attribute
+      |attribute   |value        |
+      |name        |new_phone    |
+      |name_en     |phone        |
+      |parent      |4            |
+      |image       |image.png    |
+      |kind        |2            |
+      |priority    |2            |
+      |visibility  |true         |
 
   Scenario: delete the category with category id
     When the client calls DELETE "api/v1/categories/{id}" with id
     Then the client receive status code of 204
     When the client calls GET "api/v1/categories/{id}" with id
     Then the client receive status code of 404
+
 
 
 

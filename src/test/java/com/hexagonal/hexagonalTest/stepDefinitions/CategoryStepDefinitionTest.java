@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.client.RestTemplate;
 
 
 @RunWith(Cucumber.class)
@@ -52,12 +53,14 @@ public class CategoryStepDefinitionTest extends AbstractSpringConfigurationTest 
     @Then("^the response has the following attribute$")
     public void the_response_has_the_following_attribute(DataTable table) throws Throwable {
         List<Map<String, String>> attr =  table.asMaps(String.class, String.class);
+        logger.info("***********{}",attr);
         if(response != null && response.getStatusCode().is2xxSuccessful()){
             String responseBody = response.getBody();
             ObjectMapper mapper = new ObjectMapper();
             Map<String, String> responseMap = mapper.readValue(responseBody, Map.class);
+            logger.info("************{}",responseMap);
             for(int i=0; i<attr.size(); i++) {
-                assertEquals(this.obj.get(i).get("value"), responseMap.get(this.obj.get(i).get("attribute")));
+                assertEquals(attr.get(i).get("value"), String.valueOf(responseMap.get(attr.get(i).get("attribute"))));
             }
 
         }
@@ -86,7 +89,7 @@ public class CategoryStepDefinitionTest extends AbstractSpringConfigurationTest 
     @When("^the client calls GET \"([^\"]*)\" with id$")
     public void the_client_calls_GET_with_category_id(String path) throws Throwable {
         Map<String, String> uriVariables = new HashMap<>();
-        uriVariables.put("id", String.valueOf(id));///
+        uriVariables.put("id", String.valueOf(id));
         String url = buildUrl(HOST, PORT, path, uriVariables);
         logger.info("url {}", url);
         response = invokeRESTCall(url, HttpMethod.GET, null);
@@ -113,6 +116,18 @@ public class CategoryStepDefinitionTest extends AbstractSpringConfigurationTest 
         response = invokeRESTCall(url, HttpMethod.PUT, requestEntity);
 
     }
+    @When("^the client calls PATCH \"([^\"]*)\" with id and  \"([^\"]*)\" \"([^\"]*)\"$")
+    public void the_client_calls_PATCH_with_id_and(String path, String attribute, String value) throws Throwable {
+        Map<String,String> uriVariables = new HashMap<>();
+        uriVariables.put("id", String.valueOf(id));
+        uriVariables.put(attribute,value);
+        String url = buildUrl(HOST, PORT, path, uriVariables);
+        HttpEntity<?> requestEntity = new HttpEntity<>(uriVariables, getDefaultHttpHeaders());
+        response = invokeRESTCall(url, HttpMethod.PATCH, requestEntity);
+    }
+
+
+
 
 
 
