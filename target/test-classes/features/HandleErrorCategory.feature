@@ -13,7 +13,7 @@ Feature: Handling Error Response
       |visibility  |true         |
 
     When the client calls POST "api/v1/categories/create" with the given detail
-    Then the client receive status code of 405
+    Then the client receive status code of 400
 
 
   Scenario: name and name_en should be more than 3 characters
@@ -28,14 +28,14 @@ Feature: Handling Error Response
       |visibility  |true         |
 
     When the client calls POST "api/v1/categories/create" with the given detail
-    Then the client receive status code of 405
+    Then the client receive status code of 400
 
 
   Scenario: name_en should be similar pattern [a-zA-Z]
     Given create "category" with following detail
       |attribute   |value        |
-      |name        |تلفن          |
-      |name_en     |تلفن          |
+      |name        |تلفن         |
+      |name_en     |تلفن         |
       |parent      |4            |
       |image       |image.png    |
       |kind        |2            |
@@ -43,7 +43,7 @@ Feature: Handling Error Response
       |visibility  |true         |
 
     When the client calls POST "api/v1/categories/create" with the given detail
-    Then the client receive status code of 405
+    Then the client receive status code of 400
 
 
 

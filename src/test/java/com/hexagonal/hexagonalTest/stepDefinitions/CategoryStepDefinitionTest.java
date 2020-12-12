@@ -1,6 +1,7 @@
 package com.hexagonal.hexagonalTest.stepDefinitions;
 
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -10,6 +11,8 @@ import cucumber.api.junit.Cucumber;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import org.hamcrest.Matchers;
+import org.hamcrest.text.MatchesPattern;
 import org.junit.runner.RunWith;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -48,16 +51,15 @@ public class CategoryStepDefinitionTest extends AbstractSpringConfigurationTest 
     @Then("^the client receive status code of (\\d+)$")
     public void the_client_receive_status_code_of(int statusCode) throws Throwable {
 
-        if (response!= null)
-        assertEquals(statusCode, response.getStatusCode().value()) ;
-        else
-            throw new PendingException();
+        if (response== null)
+            throw new RuntimeException();
+         assertEquals(statusCode, response.getStatusCode().value()) ;
     }
     @Then("^the response has the following attribute$")
     public void the_response_has_the_following_attribute(DataTable table) throws Throwable {
+        if (response== null)
+            throw new RuntimeException();
         List<Map<String, String>> attr =  table.asMaps(String.class, String.class);
-
-        if(response != null && response.getStatusCode().is2xxSuccessful()){
             String responseBody = response.getBody();
             ObjectMapper mapper = new ObjectMapper();
             Map<String, String> responseMap = mapper.readValue(responseBody, Map.class);
@@ -65,22 +67,22 @@ public class CategoryStepDefinitionTest extends AbstractSpringConfigurationTest 
                 assertEquals(attr.get(i).get("value"), String.valueOf(responseMap.get(attr.get(i).get("attribute"))));
             }
 
-        }
+
     }
     @Then("^the check response value type$")
     public void the_check_response_value_type(DataTable table) throws Throwable {
+        if (response== null)
+            throw new RuntimeException();
         List<Map<String, String>> attr =  table.asMaps(String.class, String.class);
-        if(response != null && response.getStatusCode().is2xxSuccessful()){
             String responseBody = response.getBody();
             ObjectMapper mapper = new ObjectMapper();
             Map<String, String> responseMap = mapper.readValue(responseBody, Map.class);
             for(int i=0; i<attr.size(); i++) {
-                 Pattern PATTERN = Pattern.compile(attr.get(i).get("type"));
-                 Matcher matcher = PATTERN.matcher(String.valueOf(responseMap.get(attr.get(i).get("attribute"))));
-                assertTrue(matcher.matches());
+                assertThat(String.valueOf(responseMap.get(attr.get(i).get("attribute")))).matches(Pattern.compile(attr.get(i).get("type"), Pattern.MULTILINE));
+
+
             }
 
-        }
     }
 
     @When("^the client calls POST \"([^\"]*)\" with the given detail$")
