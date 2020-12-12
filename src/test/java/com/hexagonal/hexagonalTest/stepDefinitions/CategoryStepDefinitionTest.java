@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.junit.Cucumber;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -47,11 +48,10 @@ public class CategoryStepDefinitionTest extends AbstractSpringConfigurationTest 
     @Then("^the client receive status code of (\\d+)$")
     public void the_client_receive_status_code_of(int statusCode) throws Throwable {
 
-        if (response!= null && response.getStatusCode().is2xxSuccessful())
-        {
-            assertEquals(statusCode, response.getStatusCode().value()) ;
-
-        }
+        if (response!= null)
+        assertEquals(statusCode, response.getStatusCode().value()) ;
+        else
+            throw new PendingException();
     }
     @Then("^the response has the following attribute$")
     public void the_response_has_the_following_attribute(DataTable table) throws Throwable {
@@ -142,9 +142,6 @@ public class CategoryStepDefinitionTest extends AbstractSpringConfigurationTest 
         HttpEntity<?> requestEntity = new HttpEntity<>(uriVariables, getDefaultHttpHeaders());
         response = invokeRESTCall(url, HttpMethod.PATCH, requestEntity);
     }
-
-
-
 
 
 
