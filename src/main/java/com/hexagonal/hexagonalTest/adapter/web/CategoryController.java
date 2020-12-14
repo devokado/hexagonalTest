@@ -54,7 +54,7 @@ public class CategoryController {
 
 
     }
-    //todo: some errors
+
     @PatchMapping("{categoryId}")
     public ResponseEntity<?>  PatchById(@PathVariable("categoryId") Long id,@RequestBody UpdateCategory category){
         ResponseCategory response = ResponseCategory.from(categoryRepository.patch(id,category));

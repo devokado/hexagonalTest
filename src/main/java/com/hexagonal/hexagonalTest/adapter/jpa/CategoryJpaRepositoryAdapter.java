@@ -7,8 +7,10 @@ import com.hexagonal.hexagonalTest.adapter.web.UpdateCategory;
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
 import com.hexagonal.hexagonalTest.domain.catalouge.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 
@@ -64,6 +66,9 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
     @Override
     public Category update(CreateCategory createCategory, Long id) {
         Optional<CategoryDTO> category = categoryJpaRepository.findById(id);
+        if (!category.isPresent()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unable to find resource");
+        }
         CategoryDTO dto = category.get();
         dto.setName(createCategory.getName());
         dto.setName_en(createCategory.getName_en());
