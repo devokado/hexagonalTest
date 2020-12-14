@@ -55,6 +55,9 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
     @Override
     public Category findById(Long id) {
         Optional<CategoryDTO> dto = categoryJpaRepository.findById(id);
+        if (!dto.isPresent()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unable to find resource");
+        }
         return dto.get().asResponse();
     }
 
@@ -86,6 +89,9 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
     public Category patch(Long id, UpdateCategory category){
         CategoryDTO toBePatchedCat = objectMapper.convertValue(category,CategoryDTO.class);
         Optional<CategoryDTO> optionalCategory = categoryJpaRepository.findById(id);
+        if (!optionalCategory.isPresent()){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unable to find resource");
+        }
         CategoryDTO fromDb = optionalCategory.get();
 
             ObjectMapper mapper = new ObjectMapper();
