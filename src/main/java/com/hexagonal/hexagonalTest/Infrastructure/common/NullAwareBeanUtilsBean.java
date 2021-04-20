@@ -1,4 +1,4 @@
-package com.hexagonal.hexagonalTest.adapter.jpa;
+package com.hexagonal.hexagonalTest.Infrastructure.common;
 
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.springframework.stereotype.Component;

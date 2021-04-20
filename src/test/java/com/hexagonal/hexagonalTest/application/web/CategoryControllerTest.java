@@ -1,10 +1,12 @@
-package com.hexagonal.hexagonalTest.adapter.web;
+package com.hexagonal.hexagonalTest.application.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
-import com.hexagonal.hexagonalTest.domain.catalouge.CategoryRepository;
+import com.hexagonal.hexagonalTest.application.ports.ICategory;
 import com.hexagonal.hexagonalTest.domain.catalouge.Name;
 import com.hexagonal.hexagonalTest.domain.catalouge.NameEN;
+import com.hexagonal.hexagonalTest.presentation.models.CreateCategory;
+import com.hexagonal.hexagonalTest.presentation.models.UpdateCategory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +20,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class CategoryControllerTest {
     @MockBean
-    private CategoryRepository categoryRepository;
+    private ICategory ICategory;
 
     @Autowired
     private MockMvc mockMvc;
@@ -51,7 +52,7 @@ class CategoryControllerTest {
         categories.add(newCategory1.asCategory());
         categories.add(newCategory2.asCategory());
 
-        doReturn(categories).when(categoryRepository).findAll();
+        doReturn(categories).when(ICategory).findAll();
 
         mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/categories"))
                 .andExpect(status().isOk())
@@ -67,7 +68,7 @@ class CategoryControllerTest {
         CreateCategory newCat = new CreateCategory("phone", "name", 1, "ss","2", 1, true);
         Category mockCat = new Category(1L,new NameEN("phone"), new Name("name"), 1, "ss", "2", 1, true);
 
-        doReturn(mockCat).when(categoryRepository).save(ArgumentMatchers.any());
+        doReturn(mockCat).when(ICategory).save(ArgumentMatchers.any());
 
         mockMvc.perform(post("/api/v1/categories/create")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -83,7 +84,7 @@ class CategoryControllerTest {
     public void updateCategory() throws Exception{
         CreateCategory newCat = new CreateCategory("shampoo", "shampoo", 1, "new.img","2", 1, true);
         Category mockCat = new Category(1L,new NameEN("shampoo new"), new Name("shampoo new"), 1, "img new", "2", 1, true);
-        doReturn(mockCat).when(categoryRepository).update(ArgumentMatchers.any(), eq(mockCat.getId()));
+        doReturn(mockCat).when(ICategory).update(ArgumentMatchers.any(), eq(mockCat.getId()));
         mockMvc.perform(put("/api/v1/categories/{categoryId}",mockCat.getId())
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .content(new ObjectMapper().writeValueAsString(newCat)))
@@ -95,7 +96,7 @@ class CategoryControllerTest {
     @DisplayName("Get category by id - Get /api/v1/categories/{categoryId} ")
     public void getById() throws Exception{
         Category mockCat = new Category(1L,new NameEN("shampoo new"), new Name("shampoo new"), 1, "img new", "2", 1, true);
-        doReturn(mockCat).when(categoryRepository).findById(mockCat.getId());
+        doReturn(mockCat).when(ICategory).findById(mockCat.getId());
         mockMvc.perform(get("/api/v1/categories/{categoryId}",mockCat.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -107,7 +108,7 @@ class CategoryControllerTest {
     @DisplayName("delete category by id - Delete /api/v1/categories/{categoryId} ")
     public void deleteById() throws Exception {
         Category mockCat = new Category(1L, new NameEN("shampoo new"), new Name("shampoo new"), 1, "img new", "2", 1, true);
-        doNothing().when(categoryRepository).deleteById(mockCat.getId());
+        doNothing().when(ICategory).deleteById(mockCat.getId());
         mockMvc.perform(delete("/api/v1/categories/{categoryId}", mockCat.getId()))
                 .andExpect(status().isNoContent());
     }
@@ -117,7 +118,7 @@ class CategoryControllerTest {
     public void PatchTest() throws Exception {
         UpdateCategory toBePatch = new UpdateCategory(null,null,null,null,null,null,true);
         Category mockCat =  new Category(1L, new NameEN("shampoo new"), new Name("shampoo new"), 1, "img new", "2", 1, true);
-        doReturn(mockCat).when(categoryRepository).patch(mockCat.getId(),toBePatch);
+        doReturn(mockCat).when(ICategory).patch(mockCat.getId(),toBePatch);
         mockMvc.perform(patch("/api/v1/categories/{categoryId}",mockCat.getId())
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(new ObjectMapper().writeValueAsString(toBePatch)))

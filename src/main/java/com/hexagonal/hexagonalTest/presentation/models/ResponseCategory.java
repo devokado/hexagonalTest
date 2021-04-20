@@ -1,4 +1,4 @@
-package com.hexagonal.hexagonalTest.adapter.web;
+package com.hexagonal.hexagonalTest.presentation.models;
 
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
 

@@ -1,11 +1,9 @@
-package com.hexagonal.hexagonalTest.adapter.jpa;
+package com.hexagonal.hexagonalTest.Infrastructure.persistance;
 
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
 import com.hexagonal.hexagonalTest.domain.catalouge.Name;
 import com.hexagonal.hexagonalTest.domain.catalouge.NameEN;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -17,7 +15,7 @@ import java.sql.Timestamp;
 @Data
 @Entity
 @Table(name = "category")
-class CategoryDTO {
+public class CategoryDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -58,11 +56,11 @@ class CategoryDTO {
     }
 
 
-    Category asCategory() {
+   public Category asCategory() {
         return new Category(new NameEN(name_en), new Name(name), parent, image, kind, priority, visibility);
     }
 
-    Category asResponse() {
+   public Category asResponse() {
         return new Category(id, new NameEN(name_en), new Name(name), parent, image, kind, priority, visibility);
     }
 

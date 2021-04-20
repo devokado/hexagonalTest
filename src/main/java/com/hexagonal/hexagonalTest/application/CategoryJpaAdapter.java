@@ -1,11 +1,14 @@
-package com.hexagonal.hexagonalTest.adapter.jpa;
+package com.hexagonal.hexagonalTest.application;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hexagonal.hexagonalTest.adapter.web.CreateCategory;
-import com.hexagonal.hexagonalTest.adapter.web.UpdateCategory;
+import com.hexagonal.hexagonalTest.Infrastructure.common.NullAwareBeanUtilsBean;
+import com.hexagonal.hexagonalTest.Infrastructure.persistance.CategoryDTO;
+import com.hexagonal.hexagonalTest.application.ports.ICategoryJpaRepository;
+import com.hexagonal.hexagonalTest.presentation.models.CreateCategory;
+import com.hexagonal.hexagonalTest.presentation.models.UpdateCategory;
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
-import com.hexagonal.hexagonalTest.domain.catalouge.CategoryRepository;
+import com.hexagonal.hexagonalTest.application.ports.ICategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
@@ -15,7 +18,6 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -23,30 +25,30 @@ import java.util.stream.Collectors;
 
 
 @Repository
-public class CategoryJpaRepositoryAdapter implements CategoryRepository {
+public class CategoryJpaAdapter implements ICategory {
     @Autowired
     private NullAwareBeanUtilsBean beanUtils;
 
-    private final CategoryJpaRepository categoryJpaRepository;
+    private final ICategoryJpaRepository ICategoryJpaRepository;
     @Autowired
     private ObjectMapper objectMapper;
 
-    public CategoryJpaRepositoryAdapter(CategoryJpaRepository categoryJpaRepository) {
-        this.categoryJpaRepository = categoryJpaRepository;
+    public CategoryJpaAdapter(ICategoryJpaRepository ICategoryJpaRepository) {
+        this.ICategoryJpaRepository = ICategoryJpaRepository;
     }
 
 
     @Override
     public Category save(@Valid Category category) {
         CategoryDTO dto= CategoryDTO.from(category);
-        dto= categoryJpaRepository.saveAndFlush(dto);
+        dto= ICategoryJpaRepository.saveAndFlush(dto);
         Category dtoAsResponse = dto.asResponse();
         return dtoAsResponse;
     }
 
     @Override
     public List<Category> findAll() {
-        return categoryJpaRepository.findAll()
+        return ICategoryJpaRepository.findAll()
                 .stream()
                 .map(CategoryDTO::asResponse)
                 .collect(Collectors.toList());
@@ -54,7 +56,7 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
 
     @Override
     public Category findById(Long id) {
-        Optional<CategoryDTO> dto = categoryJpaRepository.findById(id);
+        Optional<CategoryDTO> dto = ICategoryJpaRepository.findById(id);
         if (!dto.isPresent()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unable to find resource");
         }
@@ -63,12 +65,12 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
 
     @Override
     public void deleteById(Long id) {
-      categoryJpaRepository.deleteById(id);
+      ICategoryJpaRepository.deleteById(id);
     }
 
     @Override
     public Category update(CreateCategory createCategory, Long id) {
-        Optional<CategoryDTO> category = categoryJpaRepository.findById(id);
+        Optional<CategoryDTO> category = ICategoryJpaRepository.findById(id);
         if (!category.isPresent()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unable to find resource");
         }
@@ -80,7 +82,7 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
         dto.setPriority(createCategory.getPriority());
         dto.setImage(createCategory.getImage());
         dto.setVisibility(createCategory.isVisibility());
-        dto = categoryJpaRepository.save(dto);
+        dto = ICategoryJpaRepository.save(dto);
 
         return dto.asResponse();
     }
@@ -88,7 +90,7 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
     @Override
     public Category patch(Long id, UpdateCategory category){
         CategoryDTO toBePatchedCat = objectMapper.convertValue(category,CategoryDTO.class);
-        Optional<CategoryDTO> optionalCategory = categoryJpaRepository.findById(id);
+        Optional<CategoryDTO> optionalCategory = ICategoryJpaRepository.findById(id);
         if (!optionalCategory.isPresent()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Unable to find resource");
         }
@@ -108,7 +110,7 @@ public class CategoryJpaRepositoryAdapter implements CategoryRepository {
                     }
                 }
             });
-            categoryJpaRepository.save(fromDb);
+            ICategoryJpaRepository.save(fromDb);
 
 
         return fromDb.asResponse();

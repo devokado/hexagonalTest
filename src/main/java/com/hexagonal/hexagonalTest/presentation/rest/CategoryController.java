@@ -1,8 +1,11 @@
-package com.hexagonal.hexagonalTest.adapter.web;
+package com.hexagonal.hexagonalTest.presentation.rest;
 
 
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
-import com.hexagonal.hexagonalTest.domain.catalouge.CategoryRepository;
+import com.hexagonal.hexagonalTest.application.ports.ICategory;
+import com.hexagonal.hexagonalTest.presentation.models.CreateCategory;
+import com.hexagonal.hexagonalTest.presentation.models.ResponseCategory;
+import com.hexagonal.hexagonalTest.presentation.models.UpdateCategory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,21 +20,21 @@ import java.util.stream.Collectors;
 @RequestMapping("api/v1/categories")
 public class CategoryController {
     @Autowired
-    private CategoryRepository categoryRepository;
+    private ICategory ICategory;
 
 
 
     @PostMapping(value = "create")
     public ResponseEntity<?> createCategory(@Valid @RequestBody CreateCategory createCategory) {
         Category category = createCategory.asCategory();
-        Category responseCategory = categoryRepository.save(category);
+        Category responseCategory = ICategory.save(category);
         ResponseCategory response = ResponseCategory.from(responseCategory);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping()
     public ResponseEntity<?> getAllCategories(Model model) {
-        List<Category> categories = categoryRepository.findAll();
+        List<Category> categories = ICategory.findAll();
         List<ResponseCategory> responseCategories = categories
                 .stream()
                 .map(category -> ResponseCategory.from(category))
@@ -41,7 +44,7 @@ public class CategoryController {
 
     @GetMapping("{categoryId}")
     public ResponseEntity<?> getCategoryById(@PathVariable("categoryId") Long id) {
-        Category category = categoryRepository.findById(id);
+        Category category = ICategory.findById(id);
         ResponseCategory responseCategory = ResponseCategory.from(category);
         return ResponseEntity.status(HttpStatus.OK).body(responseCategory);
     }
@@ -49,7 +52,7 @@ public class CategoryController {
     @PutMapping("{categoryId}")
     public ResponseEntity<?> updateCategoryDetails(@PathVariable("categoryId") Long id,
                                                    @Valid @RequestBody CreateCategory createCategory) {
-        ResponseCategory responseCategory = ResponseCategory.from(categoryRepository.update(createCategory,id));
+        ResponseCategory responseCategory = ResponseCategory.from(ICategory.update(createCategory,id));
         return ResponseEntity.status(HttpStatus.OK).body(responseCategory);
 
 
@@ -57,13 +60,13 @@ public class CategoryController {
 
     @PatchMapping("{categoryId}")
     public ResponseEntity<?>  PatchById(@PathVariable("categoryId") Long id,@RequestBody UpdateCategory category){
-        ResponseCategory response = ResponseCategory.from(categoryRepository.patch(id,category));
+        ResponseCategory response = ResponseCategory.from(ICategory.patch(id,category));
        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("{categoryId}")
     public ResponseEntity<?> deleteCategoryById(@PathVariable("categoryId") Long id) {
-        categoryRepository.deleteById(id);
+        ICategory.deleteById(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Deleted");
     }
 

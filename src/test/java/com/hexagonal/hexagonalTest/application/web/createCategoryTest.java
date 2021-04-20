@@ -1,19 +1,17 @@
-package com.hexagonal.hexagonalTest.adapter.web;
+package com.hexagonal.hexagonalTest.application.web;
 
 import com.hexagonal.hexagonalTest.domain.catalouge.Category;
 import com.hexagonal.hexagonalTest.domain.catalouge.Name;
 import com.hexagonal.hexagonalTest.domain.catalouge.NameEN;
+import com.hexagonal.hexagonalTest.presentation.models.CreateCategory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
-import java.sql.Timestamp;
-import java.util.Date;
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class createCategoryTest {
